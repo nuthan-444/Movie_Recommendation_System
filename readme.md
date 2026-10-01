@@ -1,8 +1,8 @@
 # 🎬 Movie Recommendation System
 
-A **content-based movie recommendation system** built using Machine Learning and Natural Language Processing (NLP).
+A **content-based Movie Recommendation System** built using Machine Learning and Natural Language Processing (NLP).
 
-The system recommends movies that are similar to a movie selected by the user. It uses information about movies such as their genres, keywords, cast, crew, and overview to determine similarity between movies.
+The system recommends movies that are similar to a movie selected by the user. It uses movie information such as **genres, keywords, cast, crew, and overview** to determine the similarity between movies.
 
 ---
 
@@ -12,19 +12,19 @@ The recommendation system follows these main steps:
 
 ```text
 Movie Dataset
-     ↓
+      ↓
 Data Preprocessing
-     ↓
+      ↓
 Feature Selection
-     ↓
+      ↓
 Feature Combination
-     ↓
+      ↓
 Text Processing
-     ↓
+      ↓
 Vectorization
-     ↓
+      ↓
 Cosine Similarity
-     ↓
+      ↓
 Movie Recommendations
 ```
 
@@ -44,13 +44,17 @@ For example:
 
 ```text
 User selects:
+
 The Dark Knight
 
-↓
+        ↓
+
 System finds movies with similar features
 
-↓
+        ↓
+
 Recommendations:
+
 Batman Begins
 The Dark Knight Rises
 ...
@@ -64,72 +68,111 @@ The Dark Knight Rises
 * Pandas
 * NumPy
 * Scikit-learn
-* NLP
+* Natural Language Processing (NLP)
 * CountVectorizer
 * Cosine Similarity
 * Joblib
+* Jupyter Notebook
 
 ---
 
 ## 📂 Project Structure
 
+The project contains the source code, dataset, trained model files, and the recommendation script.
+
 ```text
 Movie-Recommendation-System/
 │
-├── movie_recommendation.ipynb
-├── movies.csv
+├── model.ipynb
+├── recommend.py
+└── dataset/
+     └── tmdb_5000_credits.csv
+     └──tmdb_5000_movies.csv
+├── vectors.pkl
+├── DF.pkl
 ├── requirements.txt
-├── README.md
-│
-└── model/            (to download this .pkl file goto  My Hugging Face Profile)
-    ├── vectors.pkl 
-    └── DF.pkl
+└── README.md
 ```
 
+### Files
+
+| File                    | Description                                                                             |
+| ----------------------- | --------------------------------------------------------------------------------------- |
+| `model.ipynb`           | Notebook used for preprocessing, feature engineering, vectorization, and model creation |
+| `recommend.py`          | Python script used to generate movie recommendations                                    |
+| `tmdb_5000_credits.csv` | Movie credits dataset                                                                   |
+| `tmdb_5000_movies.csv`  | Movie information dataset                                                               |
+| `vectors.pkl`           | Pre-generated movie feature vectors                                                     |
+| `DF.pkl`                | Pre-generated movie dataframe                                                           |
+| `requirements.txt`      | Required Python dependencies                                                            |
+| `README.md`             | Project documentation                                                                   |
 
 ---
 
-## 📦 Model Files
+## 🤗 Pre-trained Model Files
 
-The trained model files are hosted separately on **Hugging Face** because the `.pkl` files are too large for GitHub's normal file-size limit.
+The pre-generated model files are available here:
 
-🤗 **Hugging Face Model:**
-https://huggingface.co/
+**Hugging Face Repository:**
 
-Download the required `.pkl` files from the Hugging Face repository before running the recommendation system locally.
+https://huggingface.co/nuthan-444/movie-recommendation-system
+
+The repository contains the files required to run the recommendation system without recreating the model from the notebook.
+
+### Model Files
+
+| File               | Description                                  |
+| ------------------ | -------------------------------------------- |
+| `DF.pkl`           | Contains the movie dataset/dataframe         |
+| `vectors.pkl`      | Contains the vectorized movie features       |
+| `requirements.txt` | Required Python dependencies                 |
+| `recommend.py`     | Python script for generating recommendations |
 
 ---
 
 ## ⚙️ Installation
 
-### 1. Clone the repository
+### 1. Download the Project
+
+Clone the repository:
 
 ```bash
-git clone https://github.com/nuthan-444/Movie_Recommendation_System
-cd Movie-Recommendation-System
+git clone https://github.com/nuthan-444/Movie_Recommendation_System.git
 ```
 
-### 2. Create a virtual environment
+Move into the project directory:
+
+```bash
+cd Movie_Recommendation_System
+```
+
+---
+
+### 2. Create a Virtual Environment
 
 ```bash
 python -m venv venv
 ```
 
-### 3. Activate the virtual environment
+---
 
-### Windows
+### 3. Activate the Virtual Environment
+
+#### Windows
 
 ```bash
 venv\Scripts\activate
 ```
 
-### macOS / Linux
+#### macOS / Linux
 
 ```bash
 source venv/bin/activate
 ```
 
-### 4. Install dependencies
+---
+
+### 4. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -137,39 +180,117 @@ pip install -r requirements.txt
 
 ---
 
-## 📥 Download the Model
+## 📥 Using the Pre-trained Model
 
-Download the required `.pkl` files from the Hugging Face repository and place them in the appropriate project directory.
+If you want to use the already-generated model files without running the complete notebook, follow these steps.
 
+### Step 1 — Download the Model Files
+
+Download the following files:
+
+```text
+DF.pkl
+vectors.pkl
+```
+
+from:
+
+https://huggingface.co/nuthan-444/Movie_Recommendation_System
+
+Place both files in the **same directory** as your Python script.
+
+Your folder should look like:
+
+```text
+movie-recommendation/
+│
+├── DF.pkl
+├── vectors.pkl
+├── requirements.txt
+└── recommend.py
+```
 
 ---
 
-## ▶️ Running the Recommendation System
+### Step 2 — Install Dependencies
 
-Open the Jupyter Notebook / VS code:
+Make sure Python is installed, then run:
 
-Then open:
-
-```text
-movie_recommendation.ipynb
+```bash
+pip install -r requirements.txt
 ```
 
-Run the cells and provide a movie name to get recommendations.
+---
 
-Example:
+### Step 3 — Create `recommend.py`
+
+Create a Python file named:
+
+```text
+recommend.py
+```
+
+Add the following code:
 
 ```python
-recommend("The Dark Knight")
+import joblib
+from sklearn.metrics.pairwise import cosine_similarity
+
+DF = joblib.load('DF.pkl')
+vectors = joblib.load('vectors.pkl')
+
+similarity = cosine_similarity(vectors)
+
+
+def recommend(movie):
+    movie_index = DF[DF['title'] == movie].index[0]
+
+    distances = similarity[movie_index]
+
+    movie_list = sorted(
+        list(enumerate(distances)),
+        reverse=True,
+        key=lambda x: x[1]
+    )[1:6]
+
+    for i in movie_list:
+        print(DF.iloc[i[0]].title)
+
+
+recommend('Avatar')
 ```
 
-Output:
+---
 
-```text
-Batman Begins
-The Dark Knight Rises
-Batman
-...
+## ▶️ Run the Recommendation System
+
+Run the Python script:
+
+```bash
+python recommend.py
 ```
+
+For example:
+
+```python
+recommend('Avatar')
+```
+
+The system will print the **5 most similar movies** to `Avatar`.
+
+You can change the movie name:
+
+```python
+recommend('Titanic')
+```
+
+or:
+
+```python
+recommend('The Dark Knight')
+```
+
+> Make sure the movie title exactly matches a title available in the `title` column of `DF.pkl`.
 
 ---
 
@@ -184,13 +305,13 @@ The Dark Knight
 ### Output
 
 ```text
-1. Batman Begins
-2. The Dark Knight Rises
-3. Batman
-4. ...
+Batman Begins
+The Dark Knight Rises
+Batman
+...
 ```
 
-The recommendations are generated based on the similarity between the selected movie and other movies in the dataset.
+The recommendations are generated based on the similarity between the selected movie and the other movies in the dataset.
 
 ---
 
@@ -198,14 +319,38 @@ The recommendations are generated based on the similarity between the selected m
 
 The project uses **Cosine Similarity** to measure how similar two movie vectors are.
 
-The similarity score is based on the angle between two vectors.
+Cosine Similarity measures the angle between two vectors.
 
 A higher cosine similarity indicates that two movies have more similar features.
 
+The similarity matrix is generated using:
+
+```python
+similarity = cosine_similarity(vectors)
+```
+
+---
+
+## 🧩 Recommendation Process
+
+When a movie is provided:
+
 ```text
-Similarity → Higher
-      ↓
-More similar movies
+Movie Name
+    ↓
+Find Movie in Dataset
+    ↓
+Get Its Vector
+    ↓
+Compare With All Movie Vectors
+    ↓
+Calculate Cosine Similarity
+    ↓
+Sort Similarity Scores
+    ↓
+Select Top 5
+    ↓
+Display Recommendations
 ```
 
 ---
@@ -216,8 +361,39 @@ Content-based filtering is useful when recommendations need to be based on the a
 
 In this project, movie metadata is used instead of relying on user ratings or user-to-user behavior.
 
-This means the system can recommend movies based on the selected movie's content.
+This allows the system to recommend movies based on the characteristics of the selected movie.
 
+---
+
+## ⚠️ Important Notes
+
+* Keep `DF.pkl`, `vectors.pkl`, and `recommend.py` in the same directory when using the pre-trained model files.
+* Do not rename `DF.pkl` or `vectors.pkl` unless you also update the filenames in the Python code.
+* The movie name must exactly match a title available in the `title` column of `DF.pkl`.
+* The recommendation system returns the **top 5 similar movies**.
+* The `.pkl` files are pre-generated and do not need to be recreated to use the recommendation script.
+* The complete model-building process can be reproduced using `model.ipynb` https://github.com/nuthan-444/Movie_Recommendation_System.
+
+---
+
+## 📓 Training / Development
+
+The complete model-building process is available in:
+
+```text
+model.ipynb
+```
+
+The notebook covers:
+
+* Data preprocessing
+* Feature selection
+* Feature engineering
+* Feature combination
+* Text processing
+* Vectorization
+* Cosine similarity
+* Saving the generated model files
 
 ---
 
@@ -226,10 +402,11 @@ This means the system can recommend movies based on the selected movie's content
 **Nuthan Prasad K G**
 
 GitHub:
+
 https://github.com/nuthan-444
 
 ---
 
 ## ⭐ If You Find This Project Useful
 
-Feel free to explore the code, experiment with the model, and improve the recommendation system.
+Feel free to explore the code, experiment with the recommendation system, and improve the project.
