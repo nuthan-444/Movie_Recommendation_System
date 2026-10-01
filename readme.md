@@ -108,6 +108,23 @@ Movie-Recommendation-System/
 | `README.md`             | Project documentation                                                                   |
 
 ---
+## 📊 Dataset
+
+This project uses the **TMDB 5000 Movie Dataset**, which contains movie information including titles, genres, keywords, cast, crew, and movie overviews.
+
+The dataset is available on Kaggle:
+
+**Dataset:**
+https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata
+
+The dataset contains two files:
+
+* `tmdb_5000_movies.csv`
+* `tmdb_5000_credits.csv`
+
+These datasets are used for data preprocessing, feature engineering, text processing, and building the movie recommendation system.
+
+---
 
 ## 🤗 Pre-trained Model Files
 
