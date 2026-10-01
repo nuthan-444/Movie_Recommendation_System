@@ -115,7 +115,7 @@ The pre-generated model files are available here:
 
 **Hugging Face Repository:**
 
-https://huggingface.co/nuthan-444/movie-recommendation-system
+https://huggingface.co/nuthan-444/Movie-Recommendation-System
 
 The repository contains the files required to run the recommendation system without recreating the model from the notebook.
 
@@ -372,7 +372,8 @@ This allows the system to recommend movies based on the characteristics of the s
 * The movie name must exactly match a title available in the `title` column of `DF.pkl`.
 * The recommendation system returns the **top 5 similar movies**.
 * The `.pkl` files are pre-generated and do not need to be recreated to use the recommendation script.
-* The complete model-building process can be reproduced using `model.ipynb` https://github.com/nuthan-444/Movie_Recommendation_System.
+* The complete model-building process can be reproduced using `model.ipynb` to download goto below link.
+* https://github.com/nuthan-444/Movie_Recommendation_System.
 
 ---
 
