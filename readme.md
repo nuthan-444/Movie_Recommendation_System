@@ -115,7 +115,7 @@ The pre-generated model files are available here:
 
 **Hugging Face Repository:**
 
-https://huggingface.co/nuthan-444/Movie-Recommendation-System
+https://huggingface.co/nuthan-444/Movie_Recommendation_System
 
 The repository contains the files required to run the recommendation system without recreating the model from the notebook.
 
