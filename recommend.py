@@ -1,5 +1,5 @@
 #This Python code is used to run the model by giving movie title as input and get top 5 similar movies as output
-
+# Note : before runnning the below snippet just make sure you downloaded the DF.pkl and vectors.pkl
 
 import joblib
 from sklearn.metrics.pairwise import cosine_similarity
